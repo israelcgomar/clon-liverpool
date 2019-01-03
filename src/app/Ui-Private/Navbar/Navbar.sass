@@ -1,0 +1,45 @@
+$background-nav: #CB1685
+$color-text: white
+
+
+.Navbar
+  background: $background-nav
+  position: fixed
+  left: 0
+  right: 0
+  z-index: 10000
+.nav__bar
+  display: flex
+  justify-content: space-between
+  flex-wrap: wrap
+  .brand-logo
+    padding: 5px
+    a
+      font-family: 'Montserrat', sans-serif
+      color: $color-text
+      font-size: 25px
+      cursor: pointer
+      text-decoration: none
+      img
+        width: 10em
+  nav
+    display: flex
+    align-items: center
+    .nav__bar__first__child
+      list-style: none
+      display: flex
+      padding: 0
+
+.nav__data
+  font-size: 15px
+  text-align: right
+  color: white
+  ul
+    padding: 0 10px 0 0
+    li
+      display: block
+
+.close__session
+  a
+    color: white
+    text-decoration: underline
