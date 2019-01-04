@@ -8,58 +8,72 @@
  import _ from 'lodash';
 
  export default async function (req, res, next) {
+
+        const { product } = req.params;        
+        const liverpool_api = `https://www.liverpool.com.mx/tienda/?s=${product}&d3106047a194921c01969dfdec083925=json`
+        
         axios
-          .get(process.env.liverpool_api)
+          .get(liverpool_api)
           .then(function(response) {
-            
-            const data =  response.data.contents;
-            
+            const data = response.data.contents;
+
             let mainContent = [];
             for (let i = 0; i < data.length; i++) {
-              mainContent = data[i];              
+              mainContent = data[i];
             }
 
             let contentsArticle = [];
             for (let i = 0; i < mainContent.mainContent.length; i++) {
-                contentsArticle = mainContent.mainContent[i].contents;
+              contentsArticle = mainContent.mainContent[i].contents;
             }
-            
+
             let records = [];
             for (let i = 0; i < contentsArticle.length; i++) {
-                records = contentsArticle[i].records;                            
+              records = contentsArticle[i].records;
             }
 
             /**
              * Get Articles
              */
-            const getNameArticles = _.map(records, "productDisplayName");            
+            const getNameArticles = _.map(records, "productDisplayName");
             const concat = [...new Set([].concat(...getNameArticles))];
 
             let name;
-            const outputName = _.zipWith(name,concat,(name, concat) => ({name,concat}));
+            const outputName = _.zipWith(
+              name,
+              concat,
+              (name, concat) => ({ name, concat })
+            );
 
             /**
              * Get Price
              */
-            const getPrice = _.map(records, "listPrice");        
+            const getPrice = _.map(records, "listPrice");
             const concatPrice = [...new Set([].concat(...getPrice))];
-                        
+
             let price;
-            const outputPrice = _.zipWith(price,concatPrice,(price, concatPrice) => ({price, concatPrice}));
+            const outputPrice = _.zipWith(
+              price,
+              concatPrice,
+              (price, concatPrice) => ({ price, concatPrice })
+            );
 
             /**
-             * Get Image 
+             * Get Image
              */
-            const getImg = _.map(records, "largeImage");        
+            const getImg = _.map(records, "largeImage");
             const concatImg = [...new Set([].concat(...getImg))];
 
             let img;
-            const outputImg = _.zipWith(img,concatImg,(img, concatImg) => ({img,concatImg}));
+            const outputImg = _.zipWith(
+              img,
+              concatImg,
+              (img, concatImg) => ({ img, concatImg })
+            );
 
             const marge = _.merge(outputName, outputPrice, outputImg);
-            
-            res.status(200).json({articles: marge});
 
+            res.status(200).json({ articles: marge });
           })
           .catch(function(error) {
             console.log(error);

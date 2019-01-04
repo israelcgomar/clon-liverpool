@@ -40,6 +40,6 @@ router.post(
 
 router.get(`${prefix}-image/:id`, consultImageArticle);
 
-router.get(`${prefix}-liverpool`, articlesLiverpool);
+router.get(`${prefix}-liverpool/:product`, articlesLiverpool);
 
 export default router;
