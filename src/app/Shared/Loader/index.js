@@ -1,6 +1,6 @@
 import React from 'react';
 import { css } from 'react-emotion';
-import { BounceLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import './Loader.sass'
 
 const override = css`
@@ -20,7 +20,7 @@ export default class LoaderComponent extends React.Component {
         return (
         <div className="container">
             <div className='sweet-loading'>
-                <BounceLoader
+                <ClipLoader
                     className={override}
                     sizeUnit={"px"}
                     size={100}
