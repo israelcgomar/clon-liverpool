@@ -46,6 +46,7 @@
     "react-dom": "^16.6.1",
     "react-emotion": "9.0.0",
     "react-router-dom": "^4.3.1",
+    "react-s-alert": "^1.4.1",
     "react-spinners": "^0.4.8",
     "resolve": "1.8.1",
     "sass-loader": "^7.1.0",
@@ -114,8 +115,12 @@
     ]
   },
   "babel": {
-    "presets": ["react-app"],
-    "plugins": ["emotion"]
+    "presets": [
+      "react-app"
+    ],
+    "plugins": [
+      "emotion"
+    ]
   },
   "devDependencies": {
     "node-sass": "^4.10.0",

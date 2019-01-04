@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 import { Input, InputImage } from "../Shared/Inputs/Inputs";
 
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
+import 'react-s-alert/dist/s-alert-css-effects/slide.css';
+
 const API = "http://localhost:8010/api/v1/";
 const formValid = ({ formErrors, ...rest }) => {
   let valid = true;
@@ -17,6 +21,7 @@ const formValid = ({ formErrors, ...rest }) => {
 
   return valid;
 };
+
 
 export default class Add extends Component {
   constructor(props) {
@@ -35,6 +40,7 @@ export default class Add extends Component {
     };
     this.sendForm = this.sendForm.bind(this);
   }
+
 
   /**
    * Send Image
@@ -65,9 +71,36 @@ export default class Add extends Component {
       };
       const response = await fetch(url, body);
       const res = await response.json();
-      this.setState({ error: res.message });
+
+      if (res.success === false) {
+        Alert.error(res.message, {
+          position: 'top',
+          effect: 'slide',
+          beep: true,
+          offset: 172,
+          timeout: 3500
+        });
+      } else {
+        Alert.success('El articulo se agrego exitosamente', {
+          position: 'top',
+          effect: 'slide',
+          beep: true,
+          offset: 172,
+          timeout: 3500
+        });
+      }
+
+
     } else {
-      this.setState({ error: "Ingrese los datos del formulario" });
+      
+      Alert.error('Ingrese los datos del formulario', {
+        position: 'top',
+        effect: 'slide',
+        beep: true,
+        offset: 172,
+        timeout: 2500
+    });
+
     }
   }
 
@@ -110,11 +143,12 @@ export default class Add extends Component {
     return (
       <div className="Add">
         <form onSubmit={this.sendForm}>
-
-          <div className={this.state.error ? "msg error" : ""}>
-            <i /> {this.state.error}
-          </div>
-
+            <div>
+            <Alert 
+            stack={{limit: 5}} 
+            />
+            </div>
+            
            <Input
             error={formErrors.name.length > 0 ? "error" : null}
             label="Nombre de artículo"
