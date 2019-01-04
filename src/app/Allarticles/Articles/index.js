@@ -1,5 +1,6 @@
 import React from "react";
 import { InputSearch } from "../../Shared/Inputs/Inputs";
+import LoaderComponent from "../../Shared/Loader"
 
 import "./card.sass";
 
@@ -36,7 +37,7 @@ export default class NewArticles extends React.Component {
   };
 
   render() {
-        const { search } = this.state;
+    const { search } = this.state;
     const allArticles = this.state.articles;
     const filteredArticles = allArticles.filter(article => {
       return article.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
@@ -44,16 +45,22 @@ export default class NewArticles extends React.Component {
 
     if (this.state.articles.length > 0) {
       return <div>
-          <InputSearch label="Buscar Articulos" onChange={this.onchange} />
-          <br />
-           <div className="container__articles">
-            {filteredArticles.map((article, i) => {
+          <InputSearch 
+            label="Buscar Articulos" 
+            onChange={this.onchange} 
+          />
+          <br/>
+           <div 
+           className="container__articles">
+              {filteredArticles.map((article, i) => {
               return <div key={i}>{this.renderArticles(article)}</div>;
             })}
           </div>
         </div>;
     } else {
-      return <h3>Cargando...</h3>;
+      return (
+      <LoaderComponent/>
+      )
     }
   }
 }

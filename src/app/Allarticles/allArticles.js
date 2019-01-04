@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import { InputSearch } from "../Shared/Inputs/Inputs";
 import "./allArticles.sass";
+import LoaderComponent from "../Shared/Loader";
+
 
 const API = "http://localhost:8010/api/v1/";
 
@@ -57,7 +59,7 @@ export default class Articles extends Component {
           </div>
         </div>;
     } else {
-      return <h3>Cargando...</h3>;
+      return <LoaderComponent />
     }
   }
 }
