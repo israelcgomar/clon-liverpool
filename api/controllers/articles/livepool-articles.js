@@ -17,6 +17,10 @@
           .then(function(response) {
             const data = response.data.contents;
 
+            if (data === undefined) {
+              res.status(400).json({ success: false, message: 'El ariculo no encontrado.' })
+            }
+            
             let mainContent = [];
             for (let i = 0; i < data.length; i++) {
               mainContent = data[i];

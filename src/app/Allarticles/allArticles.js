@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { InputSearch } from "../Shared/Inputs/Inputs";
 import "./allArticles.sass";
-import LoaderComponent from "../Shared/Loader";
+// import LoaderComponent from "../Shared/Loader";
 
 
 const API = "http://localhost:8010/api/v1/";
@@ -11,17 +11,22 @@ export default class Articles extends Component {
     super(props);
     this.state = {
       articles: [],
-      search: ""
+      search: "",
+      timeLoader: ''
     };
   }
 
-  async componentDidMount() {
-    const url = `${API}articles-liverpool`;
-    fetch(url)
-      .catch(err => err)
-      .then(res => res.json())
-      .then(articles => this.setState(articles));
-  }
+  onchange = e => {
+    this.setState({ search: e.target.value });
+      const url = `${API}articles-liverpool/${this.state.search}`;
+      fetch(url)
+        .catch(err => err)
+        .then(res => res.json())
+        .then(articles => {
+          this.setState(articles);
+        });
+  };
+
 
   renderArticles = article => {
     return (
@@ -37,29 +42,27 @@ export default class Articles extends Component {
     );
   };
 
-  onchange = e => {
-    this.setState({ search: e.target.value });
-  };
-
   render() {
     const { search } = this.state;
-    const allArticles = this.state.articles;
-    const filteredArticles = allArticles.filter(article => {
-      return article.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
-    });
 
-    if (this.state.articles.length > 0) {
+    // if (this.state.articles.length > 0) {
       return <div>
-          <InputSearch label="Buscar Articulos" onChange={this.onchange} />
+          <InputSearch 
+          name='search'
+          label="Buscar Articulos" 
+          value={search}
+          onChange={this.onchange}
+          />
           <br />
           <div className="container__articles">
-            {filteredArticles.map((article, i) => {
+          {this.state.articles.map((article, i) => {
               return <div key={i}>{this.renderArticles(article)}</div>;
             })}
+          {/* <LoaderComponent /> */}
           </div>
         </div>;
-    } else {
-      return <LoaderComponent />
-    }
+    // } else {
+    //   return <LoaderComponent />
+    // }
   }
 }

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { LinkNav } from './LinkNav';
 import { SecondNavbar } from './SecondNavbar/SecondNavbar';
 import './Navbar.sass';
-import img from '../../../assets/img/liverpool_logo.png'
+import img from '../../../assets/img/liverpool-logo.svg'
 import userphoto from '../../../assets/img/profile_photo.jpg'
 
 export const Navbar = props => (
