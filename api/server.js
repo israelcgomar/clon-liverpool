@@ -64,7 +64,7 @@ app.use((err, res) => {
 /**
  * Init Server
  */
-app.listen(process.env.PORT, () => {
+app.listen(process.env.PORT_SERVER, () => {
     console.log(`Api started on port ${process.env.PORT} with environment ${process.env.ENV}`);
     console.log(`Data Base: ${dbURI}`);
 });

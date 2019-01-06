@@ -15,17 +15,24 @@ export default class Articles extends Component {
       timeLoader: ''
     };
   }
-
+  
+  
   onchange = e => {
     this.setState({ search: e.target.value });
+    setTimeout(() => {
       const url = `${API}articles-liverpool/${this.state.search}`;
       fetch(url)
         .catch(err => err)
         .then(res => res.json())
-        .then(articles => {
-          this.setState(articles);
-        });
+        .then(dataArticles => this.onSetResult(dataArticles));
+    }, 3000);
   };
+
+  onSetResult = (result, key) => {
+      localStorage.setItem('articles', JSON.stringify(result));
+      var articles = JSON.parse(localStorage.getItem('articles'));  
+      this.setState(articles);
+  }
 
 
   renderArticles = article => {
@@ -44,7 +51,8 @@ export default class Articles extends Component {
 
   render() {
     const { search } = this.state;
-
+    console.log(this.state.articles);
+    
     // if (this.state.articles.length > 0) {
       return <div>
           <InputSearch 
@@ -55,7 +63,7 @@ export default class Articles extends Component {
           />
           <br />
           <div className="container__articles">
-          {this.state.articles.map((article, i) => {
+          {this.state.articles && this.state.articles.map((article, i) => {
               return <div key={i}>{this.renderArticles(article)}</div>;
             })}
           {/* <LoaderComponent /> */}
