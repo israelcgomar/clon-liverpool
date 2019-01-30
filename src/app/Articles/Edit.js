@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import TagManager from 'react-gtm-module';
+
+
 import { Input, Select } from '../Shared/Inputs/Inputs';
 import _ from "lodash";
 
@@ -96,6 +99,21 @@ componentDidMount() {
   */
   async sendForm(ev) {
     ev.preventDefault();
+
+    /**
+     * Send Data GTM
+     */
+    const tagManagerArgs = {
+      gtmId: 'GTM-5G39HLJ',
+      dataLayer: {
+          price: this.state.price,
+          form: "editArticle",
+          description: this.state.name,
+          page: window.location.pathname
+      },
+      dataLayerName: 'editArticle'
+    }
+    TagManager.initialize(tagManagerArgs)
 
     if (formValid(this.state)) {
       const url = `${API}articles/${this.state.id}`;

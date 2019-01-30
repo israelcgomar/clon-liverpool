@@ -34,7 +34,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(logger('dev'));
-dotenv.config({ path: '../.env' });
+// dotenv.config({ path: '../.env' });
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -65,7 +65,7 @@ app.use((err, res) => {
  * Init Server
  */
 app.listen(process.env.PORT_SERVER, () => {
-    console.log(`Api started on port ${process.env.PORT} with environment ${process.env.ENV}`);
+    console.log(`Api started on port ${process.env.PORT_SERVER} with environment ${process.env.ENV}`);
     console.log(`Data Base: ${dbURI}`);
 });
 

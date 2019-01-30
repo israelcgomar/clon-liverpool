@@ -1,4 +1,5 @@
 import React from "react";
+// import TagManager from 'react-gtm-module'
 
 import {
   BrowserRouter as Router,

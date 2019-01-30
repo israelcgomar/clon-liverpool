@@ -1,5 +1,9 @@
 import React, { Component } from "react";
+// import TagManager from 'react-gtm-module'
+
+
 import { Input, InputImage } from "../Shared/Inputs/Inputs";
+import GTM from "../Shared/Taggin"
 
 import Alert from 'react-s-alert';
 import 'react-s-alert/dist/s-alert-default.css';
@@ -55,7 +59,28 @@ export default class Add extends Component {
    */
   async sendForm(ev) {
     ev.preventDefault();
+  
+    /**
+     * GTM SEND INFO
+     */
         
+  //   const tagManagerArgs = {
+  //     gtmId: 'GTM-5G39HLJ',
+   const data = {
+          price: this.state.price,
+          form: "addArticle",
+          description: this.state.name,
+          page: window.location.pathname
+      };
+
+      const _dataLayer = await this.getTaggingData(data);
+      console.log(_dataLayer);
+      
+      this.tagging.applyGTM('SearchProduct', _dataLayer);
+  
+  //     dataLayerName: 'AddArticle'
+  // }
+  // TagManager.initialize(tagManagerArgs)
 
     if (formValid(this.state)) {
 
@@ -103,7 +128,14 @@ export default class Add extends Component {
 
     }
   }
-
+  getTaggingData = (data) => {
+    console.log(data);
+    
+    const _dataLayer = data
+    _dataLayer.event = 'AddArticle';
+    _dataLayer.Section = "";
+    return _dataLayer;
+  }
   /**
    * Validations
    */
@@ -138,7 +170,10 @@ export default class Add extends Component {
    * Form
    */
   render() {
+    // console.log(window.location.pathname);
+    
     const { formErrors, price, name } = this.state;
+    console.log( this.tagging);
     
     return (
       <div className="Add">
@@ -148,7 +183,8 @@ export default class Add extends Component {
             stack={{limit: 5}} 
             />
             </div>
-            
+            <GTM ref={tagging => this.tagging = tagging} />
+           
            <Input
             error={formErrors.name.length > 0 ? "error" : null}
             label="Nombre de artículo"
